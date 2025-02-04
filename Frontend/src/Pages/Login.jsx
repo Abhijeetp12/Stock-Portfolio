@@ -11,19 +11,7 @@ import googleicon from "../assets/Google-icon.svg";
 
 function Login() {
 
-  useEffect(() => {
-    async function testCookie() {
-        try {
-            const response = await axios.get("http://localhost:3000/set-cookie");
-            console.log(response.data); // Should log "Cookie set"
-        } catch (err) {
-            console.error("Error setting cookie:", err);
-        }
-    }
-
-    // Call the function to test
-    testCookie();
-}, []);
+ 
 
   function handleGoogleSignIn () {
     window.location.href = "http://localhost:3000/auth/google"; 
