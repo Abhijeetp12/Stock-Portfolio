@@ -15,7 +15,7 @@ router.get(
 router.get(
   "/google/portfolio",
   passport.authenticate("google", {
-    failureRedirect: "/register",
+    failureRedirect: "/register", session: true
   }),
   (req, res) => {
     res.redirect("http://localhost:3001/portfolio"); 
