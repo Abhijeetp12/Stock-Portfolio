@@ -45,7 +45,7 @@ function App() {
                     <Route path="/" element={<Home/>}/>
                     <Route path='/Login' element={<Login/>}/>
                     <Route path='/Register' element={<Register/>}/>
-                    <Route path='/Portfolio' element={<Portfolio/>}/>
+                    <Route path='/portfolio' element={<Portfolio/>}/>
                 </Routes>
             </div>
             <ToastContainer 
