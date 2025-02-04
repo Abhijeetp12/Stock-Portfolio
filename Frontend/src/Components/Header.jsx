@@ -11,21 +11,20 @@ function Header(){
     const navigate = useNavigate();
     const location = useLocation();
 
-    
     useEffect(() => {
         async function checkAuth() {
             try {
                 const response = await axios.get('http://localhost:3000/checkauth', { withCredentials: true });
-                if (response.data.isAuthenticated) {
-                    setIsAuthenticated(true);
-                }
-                console.log(isAuthenticated);
+                setIsAuthenticated(response.data.isAuthenticated);
+            
             } catch (err) {
                 console.error("Error checking authentication status:", err);
+                setIsAuthenticated(false);
             }
         }
         checkAuth();
-    }, [location.pathname]);
+    }, [location.pathname]); // Dependency array ensures it runs on route changes
+    
   
 
     async function handleLogOut() {
@@ -55,13 +54,17 @@ return (
         <p className="font-Anton text-4xl text-black py-1 ml-8">Stock</p>
     </div>
     <div className='mt-2 pr-5'>
-        {isAuthenticated && location.pathname ==='/Portfolio' && (
-        <button className='bg-black w-20 h-10 rounded-md text-white text-xl font-semibold hover:scale-105'
-        onClick={handleLogOut}
-        >Logout</button>
-        )}
-        
-    </div>
+            
+        {isAuthenticated && location.pathname === "/portfolio" && (
+            <button className='bg-black w-20 h-10 rounded-md text-white text-xl font-semibold hover:scale-105'
+                onClick={handleLogOut}
+            >
+                Logout
+            </button>
+        )
+}
+</div>
+
 </nav>
 
 );
