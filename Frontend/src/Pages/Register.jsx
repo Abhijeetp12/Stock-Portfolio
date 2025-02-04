@@ -83,7 +83,7 @@ function Register(){
       console.log('Response:', response);
       if(response.status == 201){
       toast.success('Successful Registration.');
-      navigate('/Portfolio')
+      navigate('/portfolio')
       }
        else if(response.status == 500){
         toast.error(response.data.message);
