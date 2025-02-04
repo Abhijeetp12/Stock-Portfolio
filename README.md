@@ -104,7 +104,7 @@ For more details, visit [Alpha Vantage API documentation](https://www.alphavanta
 
 6. **Access the application**
 
-   - Open `http://localhost:5173` in your browser
+   - Open `http://localhost:3000` in your browser
 
 ## API Endpoints
 
