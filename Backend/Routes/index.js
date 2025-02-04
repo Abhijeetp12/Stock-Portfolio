@@ -14,30 +14,39 @@ const router=express();
 const saltRounds = 10;
 
 router.get('/checkauth', (req, res) => {
-  console.log("Session ID:", req.sessionID); // Log session ID for debugging
-  console.log("User:", req.user);
-  if (req.isAuthenticated()) { // Assuming you're using Passport.js
-      res.json({ isAuthenticated: true });
-  } else {
-      res.json({ isAuthenticated: false });
+  try {
+      console.log("Session ID:", req.sessionID);
+      console.log("Stored User in Session:", req.user); // Debugging Google login issue
+
+      if (req.user) { 
+          return res.status(200).json({ isAuthenticated: true, user: req.user });
+      } else {
+          return res.status(200).json({ isAuthenticated: false });
+      }
+  } catch (error) {
+      console.error("Error checking authentication:", error);
+      return res.status(500).json({ message: "Internal server error. Please try again." });
   }
 });
 
-router.post("/logout", (req, res) => {
-  if (req.isAuthenticated()) {
-    req.logout((err) => {
+router.post("/logout", (req, res, next) => {
+  req.logout((err) => {
       if (err) {
-        console.error('Error during logout:', err);
-        return res.status(500).json({ message: 'Logout failed.' });
+          console.error("Logout error:", err);
+          return res.status(500).json({ message: "Logout failed. Please try again." });
       }
-      res.clearCookie('connect.sid'); // Clear session cookie
-      return res.status(200).json({ message: 'Logged out successfully.' });
-    });
-  } else {
-    return res.status(400).json({ message: 'No active session to log out.' });
-  }
-}); 
 
+      req.session.destroy((err) => {
+          if (err) {
+              console.error("Session destruction error:", err);
+              return res.status(500).json({ message: "Error clearing session. Please try again." });
+          }
+
+          res.clearCookie("connect.sid"); // Ensure cookie is removed
+          return res.status(200).json({ message: "Logged out successfully." });
+      });
+  });
+});
 
 router.get("/portfolio", async (req, res) => {
   console.log(req.user.id);
