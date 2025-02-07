@@ -13,4 +13,8 @@ CREATE TABLE user_stocks (
     price DOUBLE ,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
-
+CREATE TABLE sessions(
+sid VARCHAR PRIMARY KEY,
+sess JSON NOT NULL,
+expire TIMESTAMP NOT NULL 
+);
